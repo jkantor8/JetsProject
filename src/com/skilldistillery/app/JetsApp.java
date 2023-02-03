@@ -11,12 +11,14 @@ import com.skilldistillery.entities.AirField;
 import com.skilldistillery.entities.CargoPlane;
 import com.skilldistillery.entities.FighterJet;
 import com.skilldistillery.entities.Jet;
+import com.skilldistillery.entities.OtherPlane;
 
 public class JetsApp {
-	protected AirField airfield;
+	private AirField airfield = new AirField();
+	List<Jet> jets = new ArrayList<>();
 
 	public JetsApp() {
-		airfield = new AirField();
+		
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -25,7 +27,15 @@ public class JetsApp {
 	}
 
 	private void launch() {
-		initializeJets();
+
+		
+			try {
+				airfield.initializeJets("jets.txt");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
 		displayUserMenu();
 	}
 
@@ -36,7 +46,7 @@ public class JetsApp {
 
 	private void displayUserMenu() {
 		int menuChoice;
-		AirField airfield = new AirField();
+		
 		Scanner input = new Scanner(System.in);
 		do {
 			System.out.println(" ------------------------------- ");
@@ -112,35 +122,6 @@ public class JetsApp {
 
 	}
 
-	public void initializeJets() {
 	
-		List<Jet> jets = new ArrayList<>();
-
-		try (BufferedReader bufIn = new BufferedReader(new FileReader("jets.txt"))) {
-			String line;
-			while ((line = bufIn.readLine()) != null) {
-				String[] jetData = line.split(",");
-				Jet newJet;
-				String model = jetData[1];
-				double speed = Double.parseDouble(jetData[2]);
-				int range = Integer.parseInt(jetData[3]);
-				long price = Long.parseLong(jetData[4]);
-				if (jetData[0].equals("FighterJet")) {
-					newJet = (Jet) new FighterJet(model, speed, range, price);
-				} else if (jetData[0].equals("CargoPlane")) {
-					newJet = (Jet) new CargoPlane(model, speed, range, price);
-				} else {
-					newJet = (Jet) new OtherPlane(model, speed, range, price);
-				}
-				jets.add(newJet);
-			}
-		} catch (IOException e) {
-			System.err.println(e);
-		}	catch (ArrayIndexOutOfBoundsException e) {
-			System.err.println(e);
-		}
-
-		airfield.setJets(jets);
-	}
 
 }

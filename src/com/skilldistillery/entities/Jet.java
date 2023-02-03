@@ -1,5 +1,7 @@
 package com.skilldistillery.entities;
 
+import java.util.Objects;
+
 public abstract class Jet {
 // add jets to a list
 	private String model;
@@ -35,7 +37,7 @@ public abstract class Jet {
 
 	public void fight() {
 		// TODO Auto-generated method stub
-
+		System.out.println("Dogfighting now: " + getModel());
 	}
 
 	@Override
@@ -43,5 +45,29 @@ public abstract class Jet {
 		return "Jet [model=" + model + ", speed=" + speed + ", range=" + range + ", price=" + price + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(model, price, range, speed);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jet other = (Jet) obj;
+		return Objects.equals(model, other.model) && price == other.price && range == other.range
+				&& Double.doubleToLongBits(speed) == Double.doubleToLongBits(other.speed);
+	}
+
+	public void fly() {
+		// TODO Auto-generated method stub
+		System.out.println("Pew Pew");
+	}
+
+	
 	
 }

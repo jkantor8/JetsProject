@@ -1,6 +1,4 @@
-package com.skilldistillery.app;
-
-import com.skilldistillery.entities.Jet;
+package com.skilldistillery.entities;
 
 public class OtherPlane extends Jet {
 
